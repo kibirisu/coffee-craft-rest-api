@@ -21,7 +21,7 @@ pub struct CollectionRequest {
     pub is_stored: bool,
     pub is_favorite: bool,
     pub amount_left: i32,
-    pub user_id: i32,
+    pub user_id: String,
     pub coffee_id: i32,
 }
 
@@ -103,7 +103,7 @@ pub async fn get_collection(pool: web::Data<Pool>) -> Result<HttpResponse, Error
 }
 
 pub async fn get_user_explorer(
-    user_id: web::Path<i32>,
+    user_id: web::Path<String>,
     pool: web::Data<Pool>,
 ) -> Result<HttpResponse, Error> {
     let user_collection =
@@ -114,7 +114,7 @@ pub async fn get_user_explorer(
 }
 
 pub async fn get_user_storage(
-    user_id: web::Path<i32>,
+    user_id: web::Path<String>,
     pool: web::Data<Pool>,
 ) -> Result<HttpResponse, Error> {
     let user_storage = web::block(move || db::get_user_storage(user_id, &mut pool.get().unwrap()))
@@ -124,7 +124,7 @@ pub async fn get_user_storage(
 }
 
 pub async fn get_user_favorites(
-    user_id: web::Path<i32>,
+    user_id: web::Path<String>,
     pool: web::Data<Pool>,
 ) -> Result<HttpResponse, Error> {
     let user_favorites =

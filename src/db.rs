@@ -65,7 +65,7 @@ pub fn get_collection(conn: &mut DatabaseConnection) -> QueryResult<Vec<Collecti
 }
 
 pub fn get_user_explorer(
-    user: web::Path<i32>,
+    user: web::Path<String>,
     conn: &mut DatabaseConnection,
 ) -> QueryResult<Vec<(Coffee, Option<Collection>)>> {
     use crate::schema::collection;
@@ -80,7 +80,7 @@ pub fn get_user_explorer(
 }
 
 pub fn get_user_storage(
-    user: web::Path<i32>,
+    user: web::Path<String>,
     conn: &mut DatabaseConnection,
 ) -> QueryResult<Vec<(Coffee, Collection)>> {
     use crate::schema::collection;
@@ -93,7 +93,7 @@ pub fn get_user_storage(
 }
 
 pub fn get_user_favorites(
-    user: web::Path<i32>,
+    user: web::Path<String>,
     conn: &mut DatabaseConnection,
 ) -> QueryResult<Vec<(Coffee, Collection)>> {
     use crate::schema::collection;

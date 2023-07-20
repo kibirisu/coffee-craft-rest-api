@@ -8,16 +8,19 @@ extern crate diesel;
 
 use actix_web::{web, App, HttpServer};
 use diesel::r2d2::{self, ConnectionManager};
-use diesel::sqlite::SqliteConnection;
+// use diesel::sqlite::SqliteConnection;
+use diesel::pg::PgConnection;
 
-type DatabaseConnection = SqliteConnection;
+// type DatabaseConnection = SqliteConnection;
+type DatabaseConnection = PgConnection;
 type Pool = r2d2::Pool<ConnectionManager<DatabaseConnection>>;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv::dotenv().ok();
 
-    let database_url = std::env::var("DATABASE_URL").unwrap_or("coffee.db".to_string());
+    // let database_url = std::env::var("DATABASE_URL").unwrap_or("coffee.db".to_string());
+    let database_url = std::env::var("DATABASE_URL").unwrap();
     let database_pool = Pool::builder()
         .build(ConnectionManager::<DatabaseConnection>::new(database_url))
         .unwrap();

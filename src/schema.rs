@@ -2,12 +2,12 @@
 
 diesel::table! {
     coffees (id) {
-        id -> Integer,
+        id -> Int4,
         name -> Text,
         manufacturer -> Text,
         country -> Text,
         processing -> Text,
-        package -> Integer,
+        package -> Int4,
         price -> Text,
         url -> Text,
         image_url -> Text,
@@ -17,12 +17,12 @@ diesel::table! {
 
 diesel::table! {
     collection (id) {
-        id -> Integer,
+        id -> Int4,
         is_stored -> Bool,
         is_favorite -> Bool,
-        amount_left -> Integer,
-        user_id -> Integer,
-        coffee_id -> Integer,
+        amount_left -> Int4,
+        user_id -> Text,
+        coffee_id -> Int4,
     }
 }
 

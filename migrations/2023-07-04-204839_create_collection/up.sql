@@ -1,9 +1,8 @@
 CREATE TABLE collection (
-  id INTEGER NOT NULL PRIMARY KEY,
-  is_stored BOOLEAN NOT NULL,
-  is_favorite BOOLEAN NOT NULL,
+  id SERIAL PRIMARY KEY,
+  is_stored BOOLEAN NOT NULL DEFAULT FALSE,
+  is_favorite BOOLEAN NOT NULL DEFAULT FALSE,
   amount_left INTEGER NOT NULL,
-  user_id INTEGER NOT NULL,
-  coffee_id INTEGER NOT NULL,
-  FOREIGN KEY (coffee_id) REFERENCES coffees (id)
+  user_id TEXT NOT NULL,
+  coffee_id SERIAL NOT NULL REFERENCES coffees (id)
 );

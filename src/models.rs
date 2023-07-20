@@ -1,5 +1,6 @@
 use crate::schema::*;
-pub use diesel::sqlite::sql_types::*;
+// pub use diesel::sqlite::sql_types::*;
+pub use diesel::pg::sql_types::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Queryable, Selectable, Identifiable)]
@@ -38,7 +39,7 @@ pub struct Collection {
     pub is_stored: bool,
     pub is_favorite: bool,
     pub amount_left: i32,
-    pub user_id: i32,
+    pub user_id: String,
     pub coffee_id: i32,
 }
 
@@ -48,6 +49,6 @@ pub struct NewCollection<'a> {
     pub is_stored: &'a bool,
     pub is_favorite: &'a bool,
     pub amount_left: &'a i32,
-    pub user_id: &'a i32,
+    pub user_id: &'a str,
     pub coffee_id: &'a i32,
 }
