@@ -7,11 +7,9 @@ mod schema;
 extern crate diesel;
 
 use actix_web::{web, App, HttpServer};
-use diesel::r2d2::{self, ConnectionManager};
-// use diesel::sqlite::SqliteConnection;
 use diesel::pg::PgConnection;
+use diesel::r2d2::{self, ConnectionManager};
 
-// type DatabaseConnection = SqliteConnection;
 type DatabaseConnection = PgConnection;
 type Pool = r2d2::Pool<ConnectionManager<DatabaseConnection>>;
 

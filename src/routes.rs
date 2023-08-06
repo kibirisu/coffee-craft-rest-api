@@ -106,11 +106,11 @@ pub async fn get_user_explorer(
     user_id: web::Path<String>,
     pool: web::Data<Pool>,
 ) -> Result<HttpResponse, Error> {
-    let user_collection =
+    let user_explorer =
         web::block(move || db::get_user_explorer(user_id, &mut pool.get().unwrap()))
             .await?
             .map_err(error::ErrorInternalServerError)?;
-    Ok(HttpResponse::Ok().json(user_collection))
+    Ok(HttpResponse::Ok().json(user_explorer))
 }
 
 pub async fn get_user_storage(

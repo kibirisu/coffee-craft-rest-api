@@ -2,7 +2,7 @@ use actix_web::web;
 use diesel::prelude::*;
 
 use crate::{
-    models::{Coffee, Collection, NewCoffee, NewCollection},
+    models::{Coffee, Collection, NewCoffee, NewCollection, UserCoffee},
     routes::{CoffeeRequest, CollectionRequest},
     schema::coffees::{self, dsl::*},
     DatabaseConnection,
@@ -67,7 +67,7 @@ pub fn get_collection(conn: &mut DatabaseConnection) -> QueryResult<Vec<Collecti
 pub fn get_user_explorer(
     user: web::Path<String>,
     conn: &mut DatabaseConnection,
-) -> QueryResult<Vec<(Coffee, Option<Collection>)>> {
+) -> QueryResult<Vec<UserCoffee>> {
     use crate::schema::collection;
     coffees::table
         .left_join(
@@ -75,33 +75,33 @@ pub fn get_user_explorer(
                 .eq(user.into_inner())
                 .and(coffees::id.eq(collection::coffee_id))),
         )
-        .select((Coffee::as_select(), Option::<Collection>::as_select()))
-        .load::<(Coffee, Option<Collection>)>(conn)
+        .select(UserCoffee::as_select())
+        .load(conn)
 }
 
 pub fn get_user_storage(
     user: web::Path<String>,
     conn: &mut DatabaseConnection,
-) -> QueryResult<Vec<(Coffee, Collection)>> {
+) -> QueryResult<Vec<UserCoffee>> {
     use crate::schema::collection;
     collection::table
         .inner_join(coffees::table)
         .filter(collection::user_id.eq(user.into_inner()))
         .filter(collection::is_stored.eq(true))
-        .select((Coffee::as_select(), Collection::as_select()))
+        .select(UserCoffee::as_select())
         .load(conn)
 }
 
 pub fn get_user_favorites(
     user: web::Path<String>,
     conn: &mut DatabaseConnection,
-) -> QueryResult<Vec<(Coffee, Collection)>> {
+) -> QueryResult<Vec<UserCoffee>> {
     use crate::schema::collection;
     collection::table
         .inner_join(coffees::table)
         .filter(collection::user_id.eq(user.into_inner()))
         .filter(collection::is_favorite.eq(true))
-        .select((Coffee::as_select(), Collection::as_select()))
+        .select(UserCoffee::as_select())
         .load(conn)
 }
 
